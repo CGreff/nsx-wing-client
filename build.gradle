@@ -1,0 +1,33 @@
+allprojects {
+	group = 'com.nsxwing'
+	version = '1.0-SNAPSHOT'
+
+	repositories {
+		mavenCentral()
+		jcenter()
+	}
+}
+
+subprojects {
+	apply plugin: 'java'
+
+	tasks.withType(JavaCompile) {
+		sourceCompatibility = '1.8'
+		targetCompatibility = '1.8'
+
+		options.fork = true
+		options.encoding = "UTF-8"
+	}
+
+	dependencies {
+		compile "org.projectlombok:lombok:${project.lombokVersion}"
+		compile "org.slf4j:slf4j-api:${project.slf4jVersion}"
+
+
+		testCompile "org.slf4j:log4j-over-slf4j:${project.slf4jVersion}"
+		testCompile "org.slf4j:jcl-over-slf4j:${project.slf4jVersion}"
+		testCompile "org.mockito:mockito-core:${project.mockitoVersion}"
+		testCompile "junit:junit:${project.junitVersion}"
+	}
+
+}
