@@ -1,6 +1,6 @@
-rootProject.name = 'nsx-wing-server'
+rootProject.name = 'nsx-wing-client'
 
-include 'nsx-wing-server-app',
-        'nsx-wing-server-core',
-        'nsx-wing-server-networking'
+include 'nsx-wing-client-app',
+        'nsx-wing-client-core',
+        'nsx-wing-client-networking'
 

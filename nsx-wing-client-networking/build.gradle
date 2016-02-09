@@ -1,7 +1,7 @@
-description = 'The networking components of the NSXWing Server'
+description = 'The networking components of the NSXWing Client'
 
 dependencies {
-	compile project(':nsx-wing-server-core')
+	compile project(':nsx-wing-client-core')
 	runtime(
 			[group: 'ch.qos.logback', name: 'logback-classic',  version: project.logbackVersion],
 	)
