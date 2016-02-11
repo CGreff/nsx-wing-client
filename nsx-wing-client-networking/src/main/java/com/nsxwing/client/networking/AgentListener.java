@@ -2,6 +2,7 @@ package com.nsxwing.client.networking;
 
 
 import com.nsxwing.common.event.GameEvent;
+import com.nsxwing.common.event.server.ActionEvent;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
@@ -19,7 +20,7 @@ public class AgentListener implements Runnable {
 	}
 
 	public GameEvent listen() {
-		GameEvent event = new GameEvent();
+		GameEvent event = new ActionEvent();
 
 		try {
 			ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());

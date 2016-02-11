@@ -11,6 +11,7 @@ startScripts {
 
 dependencies {
     compile project(':nsx-wing-client-core')
+    compile project(':nsx-wing-client-networking')
 
     compile "com.nsxwing.common:nsx-wing-common-game:${project.nsxWingCommonVersion}"
 
