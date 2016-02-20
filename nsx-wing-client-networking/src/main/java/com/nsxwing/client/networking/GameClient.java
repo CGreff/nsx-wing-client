@@ -9,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 
+import static com.nsxwing.common.networking.config.KryoNetwork.PORT;
+
 @Slf4j
 public class GameClient {
 
@@ -40,8 +42,9 @@ public class GameClient {
 		new Thread("Connect") {
 			public void run () {
 				try {
-					client.connect(5000, "localhost", KryoNetwork.port);
+					client.connect(5000, "localhost", PORT);
 					// Server communication after connection can go here, or in Listener#connected().
+					client.sendTCP(new ActionEvent());
 				} catch (IOException ex) {
 					ex.printStackTrace();
 					System.exit(1);
