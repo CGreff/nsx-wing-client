@@ -3,8 +3,9 @@ package com.nsxwing.client.networking;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
-import com.nsxwing.common.event.server.ActionEvent;
+import com.nsxwing.common.networking.io.event.ActionEvent;
 import com.nsxwing.common.networking.config.KryoNetwork;
+import com.nsxwing.common.networking.io.response.ActionResponse;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
@@ -44,7 +45,7 @@ public class GameClient {
 				try {
 					client.connect(5000, "localhost", PORT);
 					// Server communication after connection can go here, or in Listener#connected().
-					client.sendTCP(new ActionEvent());
+					client.sendTCP(new ActionResponse());
 				} catch (IOException ex) {
 					ex.printStackTrace();
 					System.exit(1);
