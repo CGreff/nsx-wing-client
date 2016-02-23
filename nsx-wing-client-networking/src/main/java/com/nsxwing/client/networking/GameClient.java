@@ -28,30 +28,27 @@ public class GameClient {
 		KryoNetwork.register(client);
 
 		client.addListener(new Listener() {
-			public void connected (Connection connection) {
+			public void connected(Connection connection) {
 				client.sendTCP(new ActionEvent());
 			}
 
-			public void received (Connection connection, Object object) {
+			public void received(Connection connection, Object object) {
 				log.info("Received a thing.");
 				if (object instanceof ActionEvent) {
-					ActionEvent event = (ActionEvent)object;
+					ActionEvent event = (ActionEvent) object;
 					log.info("GOT A SUPER RAD ACTION EVENT FROM KRYO WHATUP THO: " + event.getEventType());
 				}
 			}
 		});
 
-		new Thread("Connect") {
-			public void run () {
-				try {
-					client.connect(5000, "localhost", PORT);
-					// Server communication after connection can go here, or in Listener#connected().
-					client.sendTCP(new ActionResponse(CHAMP));
-				} catch (IOException ex) {
-					ex.printStackTrace();
-					System.exit(1);
-				}
-			}
-		}.start();
+		try {
+			client.connect(5000, "localhost", PORT);
+			// Server communication after connection can go here, or in Listener#connected().
+			client.sendTCP(new ActionResponse(CHAMP));
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			System.exit(1);
+		}
+
 	}
 }
