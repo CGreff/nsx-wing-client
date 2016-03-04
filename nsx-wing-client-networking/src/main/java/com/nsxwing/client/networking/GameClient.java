@@ -12,12 +12,12 @@ import java.io.IOException;
 
 import static com.nsxwing.common.networking.config.KryoNetwork.PORT;
 import static com.nsxwing.common.player.PlayerIdentifier.CHAMP;
+import static com.nsxwing.common.player.PlayerIdentifier.SCRUB;
 
 @Slf4j
 public class GameClient {
 
 	Client client;
-	String name;
 
 	public GameClient() {
 		client = new Client();
@@ -43,8 +43,10 @@ public class GameClient {
 
 		try {
 			client.connect(5000, "localhost", PORT);
+			ActionResponse actionResponse = new ActionResponse();
+			actionResponse.setPlayerIdentifier(SCRUB);
 			// Server communication after connection can go here, or in Listener#connected().
-			client.sendTCP(new ActionResponse(CHAMP));
+			client.sendTCP(actionResponse);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(1);
