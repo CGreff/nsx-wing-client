@@ -4,20 +4,20 @@ import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.nsxwing.common.networking.config.KryoNetwork;
-import com.nsxwing.common.networking.io.event.ActionEvent;
-import com.nsxwing.common.networking.io.response.ActionResponse;
+import com.nsxwing.common.networking.io.event.ConnectionEvent;
+import com.nsxwing.common.networking.io.response.ConnectionResponse;
+import com.nsxwing.common.player.PlayerIdentifier;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 
 import static com.nsxwing.common.networking.config.KryoNetwork.PORT;
-import static com.nsxwing.common.player.PlayerIdentifier.CHAMP;
-import static com.nsxwing.common.player.PlayerIdentifier.SCRUB;
 
 @Slf4j
 public class GameClient {
 
-	Client client;
+	private Client client;
+	private PlayerIdentifier playerIdentifier;
 
 	public GameClient() {
 		client = new Client();
@@ -29,24 +29,19 @@ public class GameClient {
 
 		client.addListener(new Listener() {
 			public void connected(Connection connection) {
-				client.sendTCP(new ActionEvent());
+				client.sendTCP(new ConnectionEvent());
 			}
 
 			public void received(Connection connection, Object object) {
-				log.info("Received a thing.");
-				if (object instanceof ActionEvent) {
-					ActionEvent event = (ActionEvent) object;
-					log.info("GOT A SUPER RAD ACTION EVENT FROM KRYO WHATUP THO: " + event.getEventType());
+				if (object instanceof ConnectionResponse) {
+					playerIdentifier = ((ConnectionResponse) object).getPlayerIdentifier();
+					log.info("Connection Reciprocated. I am player: " + playerIdentifier);
 				}
 			}
 		});
 
 		try {
 			client.connect(5000, "localhost", PORT);
-			ActionResponse actionResponse = new ActionResponse();
-			actionResponse.setPlayerIdentifier(SCRUB);
-			// Server communication after connection can go here, or in Listener#connected().
-			client.sendTCP(actionResponse);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(1);
