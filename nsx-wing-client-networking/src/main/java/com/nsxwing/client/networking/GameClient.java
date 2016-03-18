@@ -7,11 +7,13 @@ import com.nsxwing.common.networking.config.KryoNetwork;
 import com.nsxwing.common.networking.io.event.ConnectionEvent;
 import com.nsxwing.common.networking.io.response.ConnectionResponse;
 import com.nsxwing.common.player.PlayerIdentifier;
+import com.nsxwing.common.player.agent.PlayerAgent;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 
 import static com.nsxwing.common.networking.config.KryoNetwork.PORT;
+import static java.util.Arrays.asList;
 
 @Slf4j
 public class GameClient {
@@ -29,7 +31,9 @@ public class GameClient {
 
 		client.addListener(new Listener() {
 			public void connected(Connection connection) {
-				client.sendTCP(new ConnectionEvent());
+				ConnectionEvent connectionEvent = new ConnectionEvent();
+				connectionEvent.setPlayerAgents(asList(new PlayerAgent()));
+				client.sendTCP(connectionEvent);
 			}
 
 			public void received(Connection connection, Object object) {
